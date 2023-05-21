@@ -1,0 +1,58 @@
+# project information
+[project]
+name = "sheety"
+version = "0.1.0"
+readme = "README.md"
+requires-python = ">=3.10"
+# requirements.txt generated from here
+dependencies = [
+  "google-api-python-client",
+  "google-auth-httplib2",
+  "google-auth-oauthlib",
+]
+
+# requirements-dev.txt generated from here
+[project.optional-dependencies]
+dev = [
+  "black>=22.10.0",
+  "isort>=5.10.1",
+  "pip-tools>=6.10.0",
+  "pytest>=7.2.0",
+  "pytest-mock>=3.6.1",
+  "pytest-cov>=4.0.0",
+  "python-dotenv>=1.0.0"
+]
+
+# linting config
+[tool.ruff]
+ignore = ["E501"]
+
+# isort config
+[tool.isort]
+profile = "black"
+line_length = 79
+skip = [".env/", "venv", ".venv"]
+
+# coverage config
+[tool.coverage.paths]
+source = ["src"]
+
+[tool.coverage.run]
+branch = true
+relative_files = true
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 80
+
+# formatting config
+[tool.black]
+line-length = 79
+extend-exclude = '''
+/(
+  | .env
+  | .venv
+  | venv
+  | notebooks
+)/
+'''

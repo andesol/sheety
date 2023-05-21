@@ -1,0 +1,13 @@
+on:
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dev requirements
+        run: make install-dev
+      - name: Check formatting
+        run: make check
+      - name: Run tests
+        run: make test
