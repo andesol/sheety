@@ -6,20 +6,14 @@ A minimal library to save and retrieve data on Google Sheets, using DjangoORM-li
 
 ## Documentation
 
-### Config
+### Usage
 
 ```py
 import sheety
 
-sheety.init(creds=..., spreadsheet_id=12345678)
+s = sheety.build(spreadsheet_id=XXX, service_account_info=...)
 
-```
-
-### Save data
-
-```py
-from sheety import Model
-
+@s.model(name="blogs")
 blog = Blog(
     id=1,
     title="First post",

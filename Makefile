@@ -19,4 +19,4 @@ check:
 	black --check .
 
 test:
-	pytest
+	pytest -v

@@ -3,3 +3,4 @@
 sheety.egg-info
 .pytest_cache
 .vscode
+*.pyc

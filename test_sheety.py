@@ -1,39 +1,31 @@
-from unittest.mock import patch
+from dataclasses import dataclass
+
 import sheety
 
 
-class FakeSpreadsheet:
-    def __init__(self, *args, **kwargs):
-        self.data = {}
-
-    def build(self):
-        pass
+@dataclass
+class FakeGoogleSpreadsheet:
+    data: dict
 
     def add(self, range, data=[]):
-        self.data[range] = data
+        self.data[range].append(data)
 
 
 def test_save():
-    with patch("sheety.Spreadsheet", FakeSpreadsheet):
-        Base = sheety.connect(
-            spreadsheet_id="test",
-            service_account_info={
-                "key": "value"
-            },  # Replace with the correct test value
-        )
+    fakeGoogle = FakeGoogleSpreadsheet({"first": []})
+    s = sheety.Spreadsheet(fakeGoogle)
 
-        class Blog(Base):
-            __sheet__ = "first"
+    @s.model(name="first")
+    class Blog:
+        def __init__(self, title, author, content):
+            self.title = title
+            self.author = author
+            self.content = content
 
-            def __init__(self, title, author, content):
-                self.title = title
-                self.author = author
-                self.content = content
+    blog = Blog(title="hello", author="me", content="hello world")
 
-        blog = Blog(title="hello", author="me", content="hello world")
+    blog.save()
 
-        blog.save()
-
-        assert sheety.Base.spreadsheet.data == {
-            "first": [blog.title, blog.author, blog.content]
-        }
+    assert fakeGoogle.data["first"] == [
+        ["hello", "me", "hello world"],
+    ]
