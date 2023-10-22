@@ -1,8 +1,6 @@
 # Sheety
 
-! In development
-
-A minimal library to save and retrieve data on Google Sheets, using DjangoORM-like syntax
+Small wrapper to save and retrieve data on Google Sheets, using DjangoORM-like syntax
 
 ## Documentation
 
@@ -14,6 +12,18 @@ import sheety
 s = sheety.build(spreadsheet_id=XXX, service_account_info=...)
 
 @s.model(name="blogs")
+class Blog:
+    # Use type annotations to define the structure
+    id: int
+    title: str
+    content: str
+
+    def __init__(self, id, title, content):
+        self.id = id
+        self.title = title
+        self.content = content
+
+
 blog = Blog(
     id=1,
     title="First post",
